@@ -1,12 +1,13 @@
 const express = require('express')
 const app = express()
 const db = require('./db')
+require('dotenv').config();
 
-var bodyParser = require('body-parser')
-app.use(bodyParser.json());
+ var bodyParser = require('body-parser')
+app.use(express.json());
 
 // const Person = require('./models/person')
-const MenuItem = require('./models/menu_item');
+const PORT = process.env.PORT || 3000;
 
 app.get('/', function (req, res) {
   res.send('Hello bhai log kaise ho sbb log??')
@@ -27,19 +28,19 @@ app.get('/', function (req, res) {
 
 
 
-app.post('/menu-item',async(req, res)=>{
-  try {
-    const data = req.body
-    const newMenu = new MenuItem(data);
-    const savedNewMenu = await newMenu.save();
-    console.log ('Data is saved to database ' );
-    res.status(200).json(savedNewMenu);
+// app.post('/menu-item',async(req, res)=>{
+//   try {
+//     const data = req.body
+//     const newMenu = new MenuItem(data);
+//     const savedNewMenu = await newMenu.save();
+//     console.log ('Data is saved to database ' );
+//     res.status(200).json(savedNewMenu);
     
-  } catch (error) {
-    console.log (error);
-    res.status(500).json({ error:'Internal Server Error' });
-  }
-})
+//   } catch (error) {
+//     console.log (error);
+//     res.status(500).json({ error:'Internal Server Error' });
+//   }
+// })
 
 //Now fetching the data from the database
 
@@ -58,6 +59,7 @@ app.use('/person',personRoutes);
 app.use('/menu-item',menu_itemRoutes);
 
 
-app.listen(3000,()=>{
-    console.log("App is listening on port 3000")
+
+app.listen(PORT,()=>{
+    console.log("App is listening on port 8000")
 })
